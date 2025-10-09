@@ -1,9 +1,8 @@
 import fs from "fs/promises";
-import { access } from "fs/promises";
 
 const copy = async () => {
   try {
-    await access("src/fs/files");
+    await fs.access("src/fs/files");
     await fs.cp("src/fs/files", "src/fs/files_copy", {
       recursive: true,
       errorOnExist: true,
