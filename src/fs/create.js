@@ -1,22 +1,18 @@
-import fs from "node:fs";
+import fs from "fs/promises";
+import { existsSync } from "fs";
 
 const create = async () => {
-  fs.writeFile(
-    "src/fs/files/fresh.txt",
-    "I am fresh and young",
-    "utf8",
-    (err) => {
-      if (err) {
-        throw new Error("Error");
-      }
-    }
-  );
   try {
-    const exists = fs.existsSync("src/fs/files/fresh.txt");
+    const exists = existsSync("src/fs/files/fresh.txt");
     if (exists) {
       console.log("FS operation failed");
     }
-  } catch (err) {
+    await fs.writeFile(
+      "src/fs/files/fresh.txt",
+      "I am fresh and young",
+      "utf8"
+    );
+  } catch {
     console.log(err);
   }
 };
