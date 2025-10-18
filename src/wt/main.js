@@ -1,22 +1,37 @@
-import { Worker, workerData, parentPort, isMainThread } from "worker_threads";
+import { Worker, isMainThread } from "worker_threads";
 import { fileURLToPath } from "node:url";
 import os from "os";
+
 
 const __filename = fileURLToPath(import.meta.url);
 
 const performCalculations = async () => {
-  // console.log(workerData);
+ 
   if (isMainThread) {
+    const results = []
     let number = 10;
-    for (let i = 0; i < os.cpus().length; i++) {
+    let counter = 0
+    const cpusLength = os.cpus().length
+    for (let i = 0; i < cpusLength; i++) {
+      const worker = new Worker(__filename)
+      worker.postMessage(number)
+
       number++;
-      const worker = new Worker(__filename, {
-        workerData: number,
+      worker.on("message", (data) => {
+        results.push({status: 'resolved', data: data})
+        counter++
+        if (counter === cpusLength) {
+          console.log(results.sort((a, b) => a.data - b.data))
+        }
       });
-      worker.on("message", (data) => console.log(data));
-      worker.on("error", () => console.log("err"));
+      worker.on("error", () => {
+       results.push({status: 'error', data: null})
+       if (counter === cpusLength) { 
+        console.log(results)
+       }
+      });
     }
-  }
-};
+  } 
+}
 
 await performCalculations();
