@@ -4,11 +4,11 @@ const nthFibonacci = (n) =>
   n < 2 ? n : nthFibonacci(n - 1) + nthFibonacci(n - 2);
 
 const sendResult = () => {
-    if (parentPort) {
-      parentPort.on('message', (message) => {
-           parentPort.postMessage(nthFibonacci(message));
-       });
-    }
+  if (parentPort) {
+    parentPort.on("message", (message) => {
+      parentPort.postMessage(nthFibonacci(message));
+    });
+  }
 };
 
 sendResult();
