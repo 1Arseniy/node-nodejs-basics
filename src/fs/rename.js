@@ -8,7 +8,7 @@ const rename = async () => {
       "src/fs/files/properFilename.md"
     );
   } catch {
-    console.log("FS operation failed");
+    throw new Error("FS operation failed");
   }
 };
 

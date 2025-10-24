@@ -5,7 +5,7 @@ const list = async () => {
     const files = await fs.readdir("src/fs/files");
     console.log(files);
   } catch {
-    console.log("FS operation failed");
+    throw new Error("FS operation failed");
   }
 };
 

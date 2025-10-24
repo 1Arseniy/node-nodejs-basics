@@ -5,7 +5,7 @@ const remove = async () => {
     await fs.access("src/fs/files/fileToRemove.txt");
     await fs.unlink("src/fs/files/fileToRemove.txt");
   } catch {
-    console.log("FS operation failed");
+    throw new Error("FS operation failed");
   }
 };
 

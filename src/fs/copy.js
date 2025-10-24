@@ -9,7 +9,7 @@ const copy = async () => {
       force: false,
     });
   } catch {
-    console.log("FS operation failed");
+    throw new Error("FS operation failed");
   }
 };
 
