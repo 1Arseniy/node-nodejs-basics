@@ -18,12 +18,14 @@ const performCalculations = async () => {
       if (counter === cpusLength) {
         console.log(results.sort((a, b) => a.data - b.data));
       }
+      worker.terminate()
     });
     worker.on("error", () => {
       results.push({ status: "error", data: null });
       if (counter === cpusLength) {
         console.log(results);
       }
+      worker.terminate()
     });
   }
 };

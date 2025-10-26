@@ -1,17 +1,11 @@
 import fs from "fs";
-import { pipeline } from "node:stream/promises";
-import process from "node:process";
 
 const read = async () => {
   try {
-    await pipeline(
-      fs.createReadStream("src/streams/files/fileToRead.txt"),
-      async function* (source) {
-        for await (const chunk of source) {
-          process.stdout.write(chunk);
-        }
-      }
-    );
+    const stream = fs.createReadStream("src/streams/files/fileToRead.txt");
+    stream.on('data', (chunk) => {
+     console.log(chunk.toString())
+    })
   } catch {
     console.log("read operation failed");
   }
